@@ -1,0 +1,69 @@
+package Cohort3.com.Exercises;
+// An Application that Calculates and Displays the parking charges of each customer who parked in the garage yesterday.
+import java.util.Scanner;
+public class ParkingChargesTest {
+
+    public static void main(String[]args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Enter Number of Hours a Car Parked: ");
+        int hoursParked = input.nextInt();
+
+        ParkingCharge parkingCharge = new ParkingCharge(hoursParked);
+        double customerCharge = parkingCharge.calculateCharges();
+
+        while (input.hasNext()) {
+            System.out.printf("%n The Current Customer Charge : %.2f", customerCharge);
+            System.out.println("Enter Number of Hours a Car Parked: ");
+            hoursParked = input.nextInt();
+        }
+
+    }
+
+    public static void displayRunningTotal(int hoursPacked, double customerCharge) {
+
+    }
+}
+
+
+
+
+
+
+package Cohort3.com.Exercises;
+
+public class ParkingCharge {
+    private int hoursPacked;
+    private double currentCustomerCharge;
+
+    private final double MIN_CHARGE_IN_3HRS = 2.0;
+    private final double EXTRA_CHARGE_PER_HOUR = 0.5;
+    private final double MAX_CHARGE_IN_24HRS = 10.00;
+
+    public ParkingCharge(int hoursPacked) {
+        this.hoursPacked = hoursPacked;
+    }
+
+    public int getHoursPacked() {
+        return hoursPacked;
+    }
+
+    public void setHoursPacked(int hoursPacked) {
+        this.hoursPacked = hoursPacked;
+    }
+
+    public double calculateCharges() {
+        if (hoursPacked <= 3) {
+            currentCustomerCharge = MIN_CHARGE_IN_3HRS;
+        } else if (hoursPacked > 3 && hoursPacked <= 24) {
+            int extraHour = hoursPacked - 3;
+            double extraCharge = extraHour * EXTRA_CHARGE_PER_HOUR;
+            currentCustomerCharge = MIN_CHARGE_IN_3HRS + extraCharge;
+        }
+
+        if (currentCustomerCharge > MAX_CHARGE_IN_24HRS) {
+            currentCustomerCharge = MAX_CHARGE_IN_24HRS;
+        }
+        return currentCustomerCharge;
+    }
+}
